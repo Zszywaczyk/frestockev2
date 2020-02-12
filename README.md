@@ -7,6 +7,8 @@ W projekcie występują operacje na bazie danych typu CRUD tzn. Create Read Upda
 Projekt bazuje na ASP.NET Core w wersji 2.2 i jest zbudowany na wzorcu MVC tzn. Model-View-Controler czyli został podzielony na Modele oraz Widok i Kontroler.
 Modele są reprezentacją bazodanową, Widoki fizycznymi stronami, a Kontroler odpowiada za routing wraz z logicznymi operacjami a także(GET/POST)
 
-Projekt bazuje także na operacjach na plikach.
+Projekt korzysta także z operacji na plikach (po stronie serwera), jQuery, HTML/CSS i Freamwork do CSS jakim jest Bootstrap 
 
-Odwiedzający który wejdzie na strone ma możliwość stworzenia nowego konta lub zalogowania się 
+Odwiedzający który wejdzie na strone ma możliwość stworzenia nowego konta, zalogowania się i może jedynie wyświetlić jakie obrazki znajdują się w bazie stocka za pomocą miniaturek (thumbnails) a także wyświetlenie obrazków po ich kategorii lub wszystkie (jQuery). 
+Błędne logowanie i inne komunikaty prezentowane są przez modal bootstrapa, akcji jQuery który je wywołuje oraz przetworzony rodzaj komunikatu przez serwer. 
+Po poprawnym stworzeniu konta
