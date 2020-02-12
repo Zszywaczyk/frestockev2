@@ -1,0 +1,55 @@
+﻿@model frestocke.Models.Image.AssetIndexModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var activeUserId = HttpContextAccessor.HttpContext.Session.GetInt32("activeUserId");
+    var activeUserLogin = HttpContextAccessor.HttpContext.Session.GetString("activeUserLogin");
+}
+    @{
+        ViewData["Title"] = "ActualUser";
+    }
+
+    <h2>Aktulny użytkownik: @activeUserLogin</h2>
+
+    <div class="container">
+        <div class="row">
+            <div align="center" style="margin: 50px auto 10px auto; background-color: #affa93; padding: 10px 0 10px 0" class="col-lg-12">
+                <h1>Naciśnij na obraz jaki chcesz usunąć</h1>
+                <button class="btn btn-default filter-button" data-filter="all">All</button>
+                @foreach (var cat in Model.Categories)
+                {
+                    <button class="btn btn-default filter-button" data-filter="@cat.name">@cat.name</button>
+                }
+            </div>
+            <br />
+
+            @foreach (var image in Model.Images)
+            {
+                <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter @image.category.name">
+                        <a href="/Home/DeleteImage?id=@image.id" >
+                            <img src="~/images/stockthumbnails/@image.filename" class="img-responsive" style="object-fit:cover; width:365px; height: 365px;">
+                        </a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        $(".filter-button").click(function () {
+            var value = $(this).attr('data-filter');
+            console.log("click");
+            if (value == "all") {
+                $('.filter').show('1000');
+            }
+            else {
+                $(".filter").not('.' + value).hide('3000');
+                $('.filter').filter('.' + value).show('3000');
+            }
+        });
+        if ($(".filter-button").removeClass("active")) {
+            $(this).removeClass("active");
+        }
+        $(this).addClass("active");
+    });
+    </script>

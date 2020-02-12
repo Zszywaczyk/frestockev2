@@ -1,6 +1,47 @@
-﻿@{
+﻿@model frestocke.Models.Image.AssetIndexModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var activeUserId = HttpContextAccessor.HttpContext.Session.GetInt32("activeUserId");
+    var activeUserLogin = HttpContextAccessor.HttpContext.Session.GetString("activeUserLogin");
+    var alert = HttpContextAccessor.HttpContext.Session.GetString("alert");
+    var alertType = HttpContextAccessor.HttpContext.Session.GetString("alertType");
+    var alertIcon = HttpContextAccessor.HttpContext.Session.GetString("alertIcon");
+}
+@{
     ViewData["Title"] = "Home Page";
 }
+
+@if (alert != null)
+{
+
+        <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="alert" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title text-center" id="alertLabel">
+                            @alert <br />
+                            <span class="glyphicon @alertIcon text-center" style="font-size:200px; margin:30px"></span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#alert').modal('show');
+        });
+    </script>
+
+    HttpContextAccessor.HttpContext.Session.Remove("alert");
+    HttpContextAccessor.HttpContext.Session.Remove("alertIcon");
+}
+
+
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
@@ -12,34 +53,64 @@
         <div class="item active">
             <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
             <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+                @if (activeUserId == null)
+                {
+                    <p>Witaj na Frestocke gdzie dbamy o Twoją wygodę i szybkość pobierania.</p>
+                }
+                else
+                {
+                    <p>Dziękujemy że nam zaufałeś @activeUserLogin. </p>
+                }
+
             </div>
         </div>
         <div class="item">
             <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
             <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+                @if (activeUserId == null)
+                {
+                    <p>
+                        Zaloguj się by móc swobodnie pobierać obrazki.<br />
+                        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#Login" style="margin: 10px 0">
+                            <span class="glyphicon glyphicon-log-in"></span> Zaloguj
+                        </a>
+
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Dzięki temu że się zalogowałeś możesz swobodnie pobierać obrazki.
+                    </p>
+                }
             </div>
         </div>
         <div class="item">
             <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
             <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
+                @if (activeUserId == null)
+                {
+                    <p>
+                        Nie trać czasu. Wgrywaj swoje prace dzieląc się z innymi grafikami.
+                        <br />
+                        Stwórz darmowe konto już dzisiaj!
+                        <br />
+                        <a class="btn btn-default" href="#" data-toggle="modal" data-target="#createAccount" style="margin: 10px 0">
+                            <span class="glyphicon glyphicon-user"></span> Stwórz konto
+                        </a>
+
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Dziel się z innymi grafikami. Dodaj swoje obrazki już dziś.
+                    </p>
+                    <br />
+                    <a class="btn btn-default" href="#" data-toggle="modal" data-target="" style="margin: 10px 0">
+                        <span class="glyphicon glyphicon-plus-sign"></span> Dodaj obrazek
                     </a>
-                </p>
+                }
             </div>
         </div>
     </div>
@@ -53,42 +124,85 @@
     </a>
 </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
+
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div align="center" style="margin: 50px auto 10px auto; background-color: #affa93; padding: 10px 0 10px 0" class="col-lg-12">
+            <button class="btn btn-default filter-button" data-filter="all">All</button>
+            @foreach (var cat in Model.Categories)
+            {
+                <button class="btn btn-default filter-button" data-filter="@cat.name">@cat.name</button>
+            }
+        </div>
+        <br />
+
+        @foreach (var image in Model.Images)
+        {
+            <div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter @image.category.name">
+                @if (activeUserId != null)
+                {
+                    <a href="@image.filepath" download>
+                        <img src="~/images/stockthumbnails/@image.filename" class="img-responsive" style="object-fit:cover; width:365px; height: 365px;">
+                    </a>
+                }
+                else
+                {
+                    <img src="~/images/stockthumbnails/@image.filename" class="img-responsive" style="object-fit:cover; width:365px; height: 365px;">
+                }
+            </div>
+        }
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(".filter-button").click(function () {
+            var value = $(this).attr('data-filter');
+            console.log("click");
+            if (value == "all") {
+                $('.filter').show('1000');
+            }
+            else {
+                $(".filter").not('.' + value).hide('3000');
+                $('.filter').filter('.' + value).show('3000');
+            }
+        });
+        if ($(".filter-button").removeClass("active")) {
+            $(this).removeClass("active");
+        }
+        $(this).addClass("active");
+    });
+</script>
+
+
+
+@*<div id="assets">
+        <h3>Stock Images</h3>
+        <div id="assetsTable">
+            <table class="table table-condensed" id="imagesIndexTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var image in Model.Images)
+                    {
+                        <tr class="assetRow">
+                            <td>@image.id</td>
+                            <td class="">
+                                <img src="@image.filepath" class="imageCell" width="200px" />
+                            </td>
+                            <td>@image.title</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>*@

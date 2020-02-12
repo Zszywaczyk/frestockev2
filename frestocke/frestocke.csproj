@@ -5,8 +5,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Home\Msg\**" />
+    <Content Remove="Views\Home\Msg\**" />
+    <EmbeddedResource Remove="Views\Home\Msg\**" />
+    <None Remove="Views\Home\Msg\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StockData\StockData.csproj" />
+    <ProjectReference Include="..\StockServices\StockServices.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Image\" />
+    <Folder Include="wwwroot\images\stockthumbnails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Home\ErrorLogin.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Home\Login.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

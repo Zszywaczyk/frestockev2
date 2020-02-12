@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{ 
+    var activeUserId = HttpContextAccessor.HttpContext.Session.GetInt32("activeUserId");
+    var activeUserLogin = HttpContextAccessor.HttpContext.Session.GetString("activeUserLogin");
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,6 +14,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/custom.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -15,9 +22,12 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #51C426;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,25 +36,184 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">frestocke</a>
+                <a href="/home" class="navbar-brand">
+                    <!--<img src="~/images/logo/logo_transparent.png" class="img-fluid" id="logo" style="height:100%;" alt="Responsive image">-->
+                    <svg class="logo" version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         height="100%" viewBox="0 0 800 151.333" enable-background="new 0 0 800 151.333" xml:space="preserve"> 
+                    <g>
+                    <path fill="#FFFFFF" d="M14.432,36.044h4.84v-6.106c0-6.354,0.806-11.404,2.42-15.153c1.613-3.748,4.343-6.479,8.191-8.191 c3.847-1.713,9.122-2.569,15.824-2.569c11.864,0,17.796,2.904,17.796,8.712c0,1.887-0.621,3.5-1.861,4.84 c-1.242,1.34-2.707,2.011-4.394,2.011c-0.794,0-2.159-0.149-4.095-0.447s-3.574-0.447-4.915-0.447c-3.674,0-6.032,1.08-7.074,3.239 c-1.042,2.159-1.563,5.25-1.563,9.271v4.84h4.989c7.744,0,11.616,2.334,11.616,7c0,3.327-1.031,5.436-3.09,6.33 c-2.061,0.894-4.903,1.34-8.526,1.34H39.6v53.837c0,4.021-0.957,7.087-2.867,9.196c-1.912,2.109-4.381,3.164-7.409,3.164 c-2.88,0-5.275-1.055-7.186-3.164c-1.912-2.109-2.867-5.176-2.867-9.196V50.713h-5.584c-3.029,0-5.361-0.682-7-2.048 c-1.639-1.365-2.458-3.139-2.458-5.324C4.23,38.477,7.63,36.044,14.432,36.044z" />
+
+
+
+                    <path fill="#FFFFFF" d="M87.033,87.573v16.978c0,4.121-0.968,7.211-2.904,9.271s-4.394,3.09-7.372,3.09 c-2.93,0-5.337-1.042-7.223-3.127c-1.887-2.085-2.83-5.163-2.83-9.233V47.958c0-9.133,3.301-13.701,9.903-13.701 c3.375,0,5.808,1.068,7.297,3.202c1.489,2.135,2.309,5.287,2.458,9.457c2.432-4.17,4.926-7.322,7.483-9.457 c2.556-2.134,5.969-3.202,10.239-3.202c4.269,0,8.414,1.068,12.435,3.202c4.021,2.135,6.032,4.964,6.032,8.489 c0,2.483-0.856,4.531-2.569,6.143c-1.712,1.614-3.563,2.42-5.547,2.42c-0.745,0-2.544-0.458-5.398-1.377 c-2.855-0.918-5.374-1.377-7.558-1.377c-2.979,0-5.411,0.782-7.297,2.346c-1.887,1.563-3.351,3.885-4.393,6.962 c-1.042,3.079-1.763,6.739-2.16,10.983C87.23,76.292,87.033,81.466,87.033,87.573z" />
+
+
+
+                    <path fill="#FFFFFF" d="M186.59,80.573h-39.763c0.049,4.617,0.979,8.688,2.792,12.212c1.812,3.525,4.219,6.181,7.223,7.968 c3.003,1.787,6.316,2.681,9.941,2.681c2.432,0,4.654-0.285,6.664-0.856c2.011-0.57,3.958-1.464,5.846-2.681 c1.886-1.216,3.623-2.519,5.212-3.909c1.588-1.39,3.648-3.276,6.18-5.659c1.042-0.894,2.532-1.341,4.468-1.341 c2.085,0,3.772,0.571,5.063,1.713c1.291,1.143,1.936,2.755,1.936,4.84c0,1.838-0.72,3.984-2.159,6.441 c-1.44,2.457-3.612,4.815-6.516,7.074c-2.904,2.26-6.553,4.133-10.946,5.622c-4.393,1.489-9.445,2.233-15.153,2.233 c-13.057,0-23.208-3.723-30.456-11.169c-7.249-7.446-10.872-17.548-10.872-30.307c0-6.006,0.894-11.579,2.681-16.717 c1.787-5.138,4.394-9.543,7.819-13.217c3.425-3.673,7.644-6.49,12.659-8.452c5.013-1.96,10.574-2.941,16.68-2.941 c7.942,0,14.755,1.676,20.44,5.026c5.684,3.351,9.941,7.683,12.771,12.994c2.83,5.313,4.244,10.723,4.244,16.233 c0,5.114-1.465,8.428-4.393,9.941C196.021,79.817,191.901,80.573,186.59,80.573z M146.827,69.031h36.859 c-0.497-6.95-2.371-12.149-5.622-15.6c-3.252-3.45-7.533-5.175-12.845-5.175c-5.063,0-9.222,1.75-12.473,5.25 C149.494,57.005,147.521,62.181,146.827,69.031z" />
+
+                    <path fill="#FFFFFF" d="M239.683,14.227v122.64c0,3.376-0.758,5.92-2.271,7.633c-1.515,1.713-3.488,2.569-5.919,2.569 c-2.433,0-4.443-0.869-6.032-2.606c-1.589-1.738-2.383-4.271-2.383-7.596V14.227c0-3.325,0.793-5.857,2.383-7.595 c1.588-1.737,3.599-2.606,6.032-2.606c2.432,0,4.405,0.882,5.919,2.644C238.925,8.431,239.683,10.95,239.683,14.227z" /> <path fill="#206606" d="M343.26,99.04c0,5.263-2.023,9.445-6.069,12.547c-4.047,3.104-9.568,4.654-16.568,4.654 c-4.667,0-9.333-0.497-13.999-1.489c-4.021-0.894-6.355-1.713-7-2.457c-0.398-0.695-0.596-4.096-0.596-10.202 c0-2.63,0.596-3.995,1.787-4.095c1.191-0.149,2.208,0.496,3.053,1.936c3.723,6.504,9.729,9.755,18.02,9.755 c7,0,10.5-2.432,10.5-7.298c0-2.134-0.795-3.921-2.383-5.361c-1.738-1.638-5.114-3.548-10.127-5.733 c-7.249-3.227-12.089-6.056-14.521-8.488c-2.632-2.581-3.946-6.057-3.946-10.425c0-5.361,2.059-9.531,6.18-12.51 c3.822-2.878,8.936-4.319,15.339-4.319c4.021,0,7.694,0.324,11.021,0.968c3.574,0.646,5.436,1.44,5.585,2.383 c0.396,2.781,1.216,6.802,2.457,12.063c0.149,0.646-0.547,1.167-2.085,1.563c-1.638,0.348-2.73,0.075-3.276-0.819 c-3.922-6.404-8.887-9.606-14.893-9.606c-6.802,0-10.201,2.185-10.201,6.553c0,2.433,0.918,4.369,2.755,5.808 c1.638,1.242,5.485,3.177,11.542,5.808c6.354,2.73,10.672,5.188,12.957,7.372C341.771,90.476,343.26,94.274,343.26,99.04z" /> <path fill="#206606" d="M398.139,108.049c0,2.383-2.185,4.419-6.553,6.106c-3.872,1.489-7.794,2.234-11.765,2.234 c-10.773,0-16.159-5.734-16.159-17.201V72.233c0-3.425-0.273-5.521-0.819-6.292c-0.547-0.769-2.358-1.526-5.436-2.271 c-0.794-0.198-1.191-0.968-1.191-2.309c0-1.439,0.298-2.308,0.894-2.606c5.361-2.631,10.027-7.346,13.999-14.148 c0.546-0.942,1.613-1.24,3.202-0.894c1.091,0.348,1.663,0.994,1.712,1.936l0.298,9.308c0,0.696,0.124,1.191,0.373,1.489 c0.347,0.447,1.141,0.67,2.383,0.67h16.605c0.942,0,0.942,1.167,0,3.5c-1.143,2.83-2.83,4.245-5.063,4.245h-11.244 c-1.936,0-3.127,0.323-3.574,0.968c-0.348,0.447-0.521,1.664-0.521,3.649v24.35c0,6.155,0.546,10.052,1.638,11.69 c1.439,2.085,4.79,3.127,10.053,3.127c1.737,0,3.846-0.284,6.329-0.855c2.482-0.57,3.798-0.856,3.947-0.856 C397.841,106.933,398.139,107.305,398.139,108.049z" />
+
+                    <path fill="#206606" d="M472.23,85.041c0,8.638-3.202,15.948-9.606,21.93c-6.403,5.982-14.347,8.973-23.828,8.973 c-9.482,0-16.978-2.631-22.487-7.894c-5.313-5.162-7.968-11.988-7.968-20.477c0-8.787,3.351-16.183,10.053-22.19 c6.503-5.808,14.271-8.712,23.307-8.712c9.681,0,17.226,2.606,22.637,7.818C469.599,69.552,472.23,76.403,472.23,85.041z M459.125,89.583c0-7.793-1.888-14.122-5.659-18.988c-3.675-4.715-8.34-7.074-13.999-7.074c-5.263,0-9.558,1.85-12.883,5.547 c-3.326,3.699-4.988,8.204-4.988,13.515c0,8.539,1.936,15.19,5.808,19.956c3.574,4.369,8.24,6.553,13.999,6.553 c5.46,0,9.779-1.812,12.957-5.436C457.535,100.034,459.125,95.342,459.125,89.583z" />
+
+                    <path fill="#206606" d="M537.386,105.444c0,1.837-2.558,4.07-7.67,6.701c-5.561,2.83-11.046,4.245-16.456,4.245 c-8.44,0-15.34-2.384-20.701-7.149c-5.61-5.063-8.414-11.914-8.414-20.552c0-9.282,3.227-17.001,9.681-23.158 c6.304-6.006,14.048-9.01,23.232-9.01c5.559,0,10.398,0.794,14.52,2.383c3.772,1.489,5.659,3.079,5.659,4.766 c0,1.143-0.931,2.879-2.792,5.212c-1.861,2.334-3.388,3.5-4.579,3.5c-0.745,0-2.458-1.067-5.139-3.202 c-5.015-3.971-8.936-5.957-11.765-5.957c-4.468,0-8.143,1.688-11.021,5.063c-3.028,3.674-4.542,8.737-4.542,15.19 c0,7.794,2.184,14.024,6.553,18.69c3.971,4.22,8.761,6.329,14.371,6.329c5.559,0,10.797-1.538,15.712-4.617 c0.446-0.298,1.042-0.446,1.787-0.446C536.864,103.433,537.386,104.103,537.386,105.444z" />
+
+                    <path fill="#206606" d="M621.827,112.443c0,1.738-1.167,2.655-3.5,2.756c-3.476,0.049-8.018,0.298-13.627,0.744 c-2.78,0.546-4.766,0.198-5.957-1.043c-7.844-8.438-14.495-17.275-19.956-26.509c-0.446-0.793-1.018-1.191-1.712-1.191 c-0.845,0-2.309,0.745-4.394,2.234c-2.334,1.291-3.5,3.127-3.5,5.51c0,1.688,0.049,4.121,0.149,7.298 c0.099,3.178,0.894,5.263,2.383,6.255c1.042,0.695,3.449,1.241,7.223,1.638c2.333,0.298,3.5,1.167,3.5,2.606 c0,1.143-0.187,1.851-0.559,2.122c-0.373,0.272-1.354,0.336-2.941,0.187c-4.965-0.447-13.354-0.198-25.169,0.745 c-2.979,0.247-4.592-0.125-4.84-1.117c-0.1-0.347-0.148-0.844-0.148-1.489c0-1.538,1.514-2.705,4.542-3.5 c2.729-0.694,4.096-3.896,4.096-9.605V35.001c0-4.07-0.398-6.899-1.191-8.489c-1.093-2.035-3.377-3.623-6.851-4.766 c-1.639-0.545-2.458-1.314-2.458-2.308c0-1.439,1.166-2.556,3.5-3.351c3.724-1.24,7.271-2.953,10.648-5.138 c2.729-1.787,4.418-2.681,5.063-2.681c2.035,0,3.053,1.292,3.053,3.872c0-0.347-0.025,2.11-0.074,7.372 c-0.05,3.625-0.074,8.489-0.074,14.595l0.148,46.614c0,1.291,0.347,1.936,1.043,1.936c0.744,0,1.886-0.645,3.425-1.936 c4.12-3.227,9.184-7.447,15.19-12.659c1.191-1.24,1.787-2.234,1.787-2.979c0-1.34-2.011-2.283-6.031-2.83 c-1.738-0.198-2.558-1.166-2.457-2.904c0.148-1.737,1.017-2.482,2.605-2.234c3.574,0.497,8.787,0.77,15.638,0.819 c4.766,0.05,9.506,0.075,14.223,0.075c1.538,0.05,2.308,0.968,2.308,2.755c0,1.688-1.217,2.606-3.648,2.755 c-3.823,0.149-7.422,1.018-10.797,2.606c-4.717,2.135-9.755,5.883-15.116,11.244c-0.397,0.298-0.596,0.671-0.596,1.117 c0,0.696,0.844,2.358,2.532,4.989c6.204,9.433,12.063,16.557,17.573,21.371c3.523,3.028,6.824,4.542,9.903,4.542 c2.282,0,3.697,0.162,4.244,0.484C621.554,110.198,621.827,111.054,621.827,112.443z" />
+
+                    <path fill="#FFFFFF" d="M690.705,14.227v122.64c0,3.376-0.758,5.92-2.271,7.633c-1.515,1.713-3.488,2.569-5.92,2.569 c-2.433,0-4.443-0.869-6.031-2.606c-1.589-1.738-2.383-4.271-2.383-7.596V14.227c0-3.325,0.794-5.857,2.383-7.595 c1.588-1.737,3.599-2.606,6.031-2.606c2.432,0,4.405,0.882,5.92,2.644C689.947,8.431,690.705,10.95,690.705,14.227z" /> <path fill="#FFFFFF" d="M771.051,80.573h-39.764c0.049,4.617,0.979,8.688,2.793,12.212c1.812,3.525,4.219,6.181,7.223,7.968 c3.003,1.787,6.316,2.681,9.94,2.681c2.432,0,4.654-0.285,6.665-0.856c2.01-0.57,3.958-1.464,5.845-2.681 c1.887-1.216,3.623-2.519,5.213-3.909c1.588-1.39,3.648-3.276,6.181-5.659c1.042-0.894,2.531-1.341,4.468-1.341 c2.085,0,3.771,0.571,5.063,1.713c1.29,1.143,1.936,2.755,1.936,4.84c0,1.838-0.72,3.984-2.159,6.441 c-1.44,2.457-3.611,4.815-6.516,7.074c-2.904,2.26-6.553,4.133-10.946,5.622s-9.445,2.233-15.153,2.233 c-13.057,0-23.208-3.723-30.455-11.169c-7.248-7.446-10.871-17.548-10.871-30.307c0-6.006,0.894-11.579,2.681-16.717 c1.787-5.138,4.393-9.543,7.818-13.217c3.425-3.673,7.644-6.49,12.658-8.452c5.014-1.96,10.574-2.941,16.68-2.941 c7.942,0,14.756,1.676,20.44,5.026c5.684,3.351,9.94,7.683,12.771,12.994c2.829,5.313,4.244,10.723,4.244,16.233 c0,5.114-1.465,8.428-4.394,9.941C780.481,79.817,776.362,80.573,771.051,80.573z M731.287,69.031h36.859 c-0.497-6.95-2.371-12.149-5.622-15.6c-3.252-3.45-7.533-5.175-12.845-5.175c-5.063,0-9.222,1.75-12.473,5.25 C733.955,57.005,731.982,62.181,731.287,69.031z" />
+
+                        </g>
+                    </svg>
+                </a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                <ul class="nav navbar-nav list_a">
+                    <li><a href="/Home">Strona Główna</a></li>
+                    <li><a href="/Home/About">O Nas</a></li>
+                    <li><a href="/Home/Contact">Kontakt</a></li>
                 </ul>
+                <ul class="nav navbar-nav list_a navbar-right">
+
+                    @if (activeUserId == null)
+                    {
+                        <li><a href="#" data-toggle="modal" data-target="#createAccount"><span class="glyphicon glyphicon-user"></span> Stwórz konto</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#Login"><span class="glyphicon glyphicon-log-in"></span> Zaloguj</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#" data-toggle="modal" data-target="#addImage"><span class="glyphicon glyphicon-plus-sign"></span> Dodaj obrazek</a></li>
+                        <li><a asp-action="ActualUser">Witaj, <span class="glyphicon glyphicon-user"></span> @activeUserLogin</a></li>
+                        <li><a href="/Home/Logout"><span class="glyphicon glyphicon-log-out"></span> Wyloguj się...</a></li>
+                    }
+                </ul>
+
             </div>
         </div>
     </nav>
 
+    @if (activeUserId == null)
+    {
+        <!-- Modal Stwórz Konto -->
+        <div class="modal fade" id="createAccount" tabindex="-1" role="dialog" aria-labelledby="createAccountLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title text-center" id="createAccountLabel">Stwórz swoje konto</h3>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <p>Pozwól nam się poznać :)</p>
+                        <form class="form-signin" asp-action="CreateAccount">
+                            <label for="createLogin" class="sr-only">Login</label>
+                            <p>
+                                Podaj swój login:
+                                <input type="text" id="createLogin" class="form-control" placeholder="Login" required="" autofocus="" name="cLogin">
+                            </p>
+
+                            <label for="createPassword" class="sr-only">Hasło</label>
+                            <p>
+                                Podaj swoje hasło:
+                                <input type="password" id="createPassword" class="form-control" placeholder="Hasło" required="" name="cPassword">
+                            </p>
+
+                            <label for="createEmail" class="sr-only">Email</label>
+                            <p>
+                                Podaj swój email:
+                                <input type="text" id="createEmail" class="form-control" placeholder="Email" required="" autofocus="" name="cEmail">
+                            </p>
+                            <br />
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Stwórz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Zaloguj -->
+        <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="LoginLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:15px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title text-center" id="LoginLabel">Zaloguj się</h3>
+                    </div>
+                    <div class="modal-body text-center">
+                        <form class="form-signin" asp-action="Login">
+                            <label for="inputEmail" class="sr-only">Login</label>
+                            <input type="text" id="inputEmail" class="form-control" placeholder="Login" required="" autofocus="" name="Login">
+                            <br>
+                            <label for="inputPassword" class="sr-only">Hasło</label>
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Hasło" required="" name="Password">
+                            <div class="checkbox mb-3">
+                                <label>
+                                    <input type="checkbox" value="remember-me"> Zapamiętaj mnie
+                                </label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
+                        </form>
+                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Modal Dodadania obrazka -->
+        <div class="modal fade" id="addImage" tabindex="-1" role="dialog" aria-labelledby="addImageLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title text-center" id="addImageLabel">Dodaj obrazek</h3>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <p>Podziel się obrazkiem</p>
+                        <form enctype="multipart/form-data" class="form-signin" asp-action="AddImage">
+                            <label for="imageTitle" class="sr-only">Login</label>
+                            <p>
+                                Tytuł:
+                                <input type="text" id="imageTitle" class="form-control" placeholder="Tytuł obrazka" required="" autofocus="" name="imageTitle">
+                            </p>
+
+                            <label for="imageCategory" class="sr-only">Kategoria</label>
+                            <p>
+                                Kategoria:
+                                <input type="text" id="imageCategory" class="form-control" placeholder="Kategoria obrazka" required="" autofocus="" name="imageCategory">
+                            </p>
+
+                            <label for="imageFile" class="sr-only">Obrazek</label>
+                            <p>
+                                Obrazek:
+                                <input type="file" accept=".jpg, .png" id="imageFile" class="form-control" placeholder="Wybierz obrazek" required="" autofocus="" name="imageFile">
+                            </p>
+
+                            <br />
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Dodaj</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    <div class="container body-content col-lg-12  col-md-12 col-sm-12 col-xs-12">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2020 - frestocke</p>
+            <p>&copy; 2019 - frestocke</p>
         </footer>
     </div>
 
