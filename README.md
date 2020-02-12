@@ -11,4 +11,4 @@ Projekt korzysta także z operacji na plikach (po stronie serwera), jQuery, HTML
 
 Odwiedzający który wejdzie na strone ma możliwość stworzenia nowego konta, zalogowania się i może jedynie wyświetlić jakie obrazki znajdują się w bazie stocka za pomocą miniaturek (thumbnails) a także wyświetlenie obrazków po ich kategorii lub wszystkie (jQuery). 
 Błędne logowanie i inne komunikaty prezentowane są przez modal bootstrapa, akcji jQuery który je wywołuje oraz przetworzony rodzaj komunikatu przez serwer. 
-Po poprawnym stworzeniu konta
+Po poprawnym stworzeniu konta i zalogowaniu się, ustanowione zostaje ciasteczko sesyjne które będzie trwać przez 30 minut i które posiada tylko login i id użytkownika. Taki użytkownik ma możliwość kliknięcia interesującego go zdjęcia i tym samy pobierane jest zdjęcie z serwera. Użytkownik dodatkowo dostał opcję dodania swojego zdjęcia. Jeśli użytkownik załaduje zdjęcie i nada mu nową Kategorię np 'buildings', to nowa kategoria zostanie dodana do bazy. Zdjęcie na serwerze zostaje zapisane w dwóch miejscach, w folderze plików o pełnej swojej rozdzielczości oraz w plikach thumnails.
